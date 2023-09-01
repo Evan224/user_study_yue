@@ -1,0 +1,19 @@
+{
+  "userInfo": {
+    "name": "1",
+    "age": "1",
+    "gender": "male"
+  },
+  "choices": [
+    {
+      "name": "Android_2",
+      "choiceName": "right",
+      "grid": "right"
+    },
+    {
+      "name": "Android_1",
+      "choiceName": "right",
+      "grid": "right"
+    }
+  ]
+}
