@@ -9,8 +9,8 @@ const PORT = 3000;
 // AWS Configuration
 AWS.config.update({
     region: 'eu-north-1',
-    accessKeyId: "AKIATO7GRX2PG64CSHF2",
-    secretAccessKey:"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",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 const s3 = new AWS.S3();
 
