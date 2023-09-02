@@ -83,9 +83,13 @@ app.get('/images', async (req, res) => {
                 grid: !isSwap ? 'right' : 'left'
             };
         });
+        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
 
         res.json(imagePairs);
     } catch (error) {
+        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
         console.error("S3 Error:", error);
         res.status(500).send('Error fetching images from S3');
     }
@@ -102,6 +106,8 @@ app.post('/report', (req, res) => {
         Body: JSON.stringify(reportData, null, 2),
         ContentType: 'application/json'
     };
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
 
     s3.putObject(params, (err, data) => {
         if (err) {
