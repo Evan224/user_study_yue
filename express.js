@@ -9,15 +9,14 @@ const PORT = 3000;
 // AWS Configuration
 AWS.config.update({
     region: 'eu-north-1',
-    // accessKeyId: 'YOUR_ACCESS_KEY',
-    // secretAccessKey: 'YOUR_SECRET_KEY'
+    accessKeyId: "AKIATO7GRX2PG64CSHF2",
+    secretAccessKey:"mZuOcfjBZkAT/v6edDmwosg6k38SaC1WwD1mBCt6",
 });
 const s3 = new AWS.S3();
 
 app.use(bodyParser.json());
 app.use(cors());
 // API to fetch image list from S3
-const BASIC_URL='https://user-study-yue.s3.eu-north-1.amazonaws.com/';
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -80,16 +79,24 @@ app.get('/images', async (req, res) => {
     }
 });
 
-// API to store report information as JSON
 app.post('/report', (req, res) => {
     const reportData = req.body;
-    console.log(reportData,'---------')
+    const reportName = 'report' + reportData?.userInfo?.name + '.json';
 
-    fs.writeFile('report'+reportData?.userInfo?.name+'.json', JSON.stringify(reportData, null, 2), (err) => {
+    // Save the report data to the "results" folder in S3
+    const params = {
+        Bucket: 'user-study-yue',
+        Key: `results/${reportName}`,
+        Body: JSON.stringify(reportData, null, 2),
+        ContentType: 'application/json'
+    };
+
+    s3.putObject(params, (err, data) => {
         if (err) {
-            return res.status(500).send('Error saving report');
+            console.error("Error saving report to S3:", err);
+            return res.status(500).send('Error saving report to S3');
         }
-        res.send('Report saved successfully');
+        res.send('Report saved successfully to S3');
     });
 });
 
