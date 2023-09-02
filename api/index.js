@@ -37,7 +37,7 @@ app.get('/api', (req, res) => {
     res.end(`Item: ${slug}`);
   });
 
-app.get('/images', async (req, res) => {
+app.get('/api/images', async (req, res) => {
     try {
         const params = {
             Bucket: 'user-study-yue'
@@ -95,7 +95,7 @@ app.get('/images', async (req, res) => {
     }
 });
 
-app.post('/report', (req, res) => {
+app.post('/api/report', (req, res) => {
     const reportData = req.body;
     const reportName = 'report' + reportData?.userInfo?.name + '.json';
 
