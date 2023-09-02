@@ -100,6 +100,8 @@ app.post('/report', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
+
+module.exports = app;
