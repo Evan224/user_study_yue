@@ -114,7 +114,9 @@ app.post('/api/report', (req, res) => {
             console.error("Error saving report to S3:", err);
             return res.status(500).send('Error saving report to S3');
         }
-        res.send('Report saved successfully to S3');
+        res.send(JSON.stringify({
+            message: 'Report saved successfully'
+        }));
     });
 });
 
