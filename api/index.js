@@ -124,4 +124,22 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.get('/api/reports', async (req, res) => {
+    try {
+        const params = {
+            Bucket: 'user-study-yue',
+            Prefix: 'results/'
+        };
+
+        const data = await s3.listObjectsV2(params).promise();
+
+        const reports = data.Contents.map(item => item.Key);
+
+        res.json(reports);
+    } catch (error) {
+        console.error("S3 Error:", error);
+        res.status(500).send('Error fetching reports from S3');
+    }
+});
+
 module.exports = app;
